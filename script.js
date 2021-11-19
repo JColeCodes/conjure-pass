@@ -1,16 +1,17 @@
 // Assignment code here
+
+// Create characters for password
+var alphabet = "abcdefghijklmnopqrstuvwxyz";
+var numbers = "0123456789";
+var chars = "!@#$%^&*()?<>.,':;-+=_";
+
 // Random!
 var randomNum = function(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-// Generate Password
-var generatePassword = function() {
-  // Create characters for password
-  var alphabet = "abcdefghijklmnopqrstuvwxyz";
-  var numbers = "0123456789";
-  var chars = "!@#$%^&*()?<>.,':;-+=_";
-
+// Password Requirements
+var passRequire = function() {
   // Ask user for password specifications
   // Ask Length
   var passLength = window.prompt("How many characters long do you want your password to be? (8-128, or * for random length)");
@@ -21,53 +22,60 @@ var generatePassword = function() {
   }
   if (!passLength || passLength < 8 || passLength > 128){
     window.alert("Not a valid number length.");
-    return generatePassword();
+    return passRequire();
   }
 
   // Ask if lowercase
   var passLower = window.confirm("Would you like your password to have lowercase characters? (a, b, c...)");
-  console.log(passLower);
   // Ask if UPPERCASE
   var passUpper = window.confirm("Would you like your password to have UPPERCASE characters? (A, B, C...)");
-  console.log(passUpper);
   // Ask if number
   var passNum = window.confirm("Would you like your password to have numberical (number) characters? (1, 2, 3...)");
-  console.log(passNum);
   // Ask if special characters
   var passSpec = window.confirm("Would you like your password to have special characters? (!, $, &...)");
-  console.log(passSpec);
+
+  if (!passLower && !passUpper && !passNum && !passSpec) {
+    window.alert("You must have at least one password requirement selected.");
+    return passRequire();
+  }
 
   // Assign requirements for the password
   var passwordRequirements = {
-    length: passLength,
+    len: passLength,
     lowercase: passLower,
     uppercase: passUpper,
     numeric: passNum,
     specialchar: passSpec
   }
 
+  return JSON.stringify(passwordRequirements);
+}
+
+// Generate Password
+var generatePassword = function() {
+
+  var passReq = JSON.parse(passRequire());
+
   // Create bank of possible characters for password
   var possChar = "";
-  if (passwordRequirements.lowercase) {
+  if (passReq.lowercase) {
     possChar += alphabet;
   }
-  if (passwordRequirements.uppercase) {
+  if (passReq.uppercase) {
     possChar += alphabet.toUpperCase();
   }
-  if (passwordRequirements.numeric) {
+  if (passReq.numeric) {
     possChar += numbers;
   }
-  if (passwordRequirements.specialchar) {
+  if (passReq.specialchar) {
     possChar += chars;
   }
   var letterBank = possChar.split("");
-  console.log(letterBank);
 
   // Generate random password
   var myPassword = "";
-  for (i = 0; i < passwordRequirements.length; i++) {
+  for (i = 0; i < passReq.len; i++) {
     myPassword += letterBank[randomNum(0,letterBank.length)];
-    console.log(myPassword);
   }
 
   return myPassword;
