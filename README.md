@@ -3,7 +3,7 @@ The password generator asks the user to input how long they want their password 
 Once the user has submitted the prompts, they are able to re-generate a password (with the same requirements they had previously entered) as many times as they want until they get a password they like. They are able to change the password requirements at any time by running "generate password" again.
 
 # View Live Page
-[View the live Password Generator page on GitHub.](https://jcolecodes.github.io/password-generator-challenge-03/)
+[View the live Password Generator page on GitHub.](https://jcolecodes.github.io/conjure-pass/)
 
 # Screenshot
 ![Screenshot of the portfolio page as seen with 1000px width](./screenshot.jpg)
